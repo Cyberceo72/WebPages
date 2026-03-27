@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCR-QMS Skill — Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+  :root {
+    --navy: #0B1E3D; --red: #C8102E; --steel: #4A6FA5; --light: #EBF0F8;
+    --mid: #A8BBDA; --text: #1A2A40; --muted: #6B7E99; --border: #D0DCF0;
+    --code-bg: #0D2137; --code-text: #7EC8E3; --warn: #F5A623; --green: #2D9D4E;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #F4F7FB; color: var(--text); line-height: 1.65; font-size: 15px; }
+  html { scroll-behavior: smooth; }
+
+  .site-header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,.35); }
+  .header-inner { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 10px 32px; }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-logo-chip { background: #fff; border-radius: 5px; padding: 5px 10px; display:flex; align-items:center; }
+  .header-logo-chip img { height: 26px; display:block; }
+  .hdiv { width:1px; height:26px; background:rgba(255,255,255,.2); }
+  .header-title { color:#fff; font-size:12px; font-weight:500; letter-spacing:.05em; text-transform:uppercase; opacity:.75; }
+  .skill-badge { background:var(--red); color:#fff; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; padding:4px 10px; border-radius:3px; letter-spacing:.03em; }
+
+  .hero { background: linear-gradient(150deg, #060f1e 0%, #0B1E3D 40%, #132D5A 75%, #1A3A6B 100%); padding:64px 32px 52px; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74,111,165,0.22) 0%, transparent 70%); pointer-events:none; }
+  .hero-logo-area { margin: 0 auto 28px; position:relative; z-index:1; }
+  .hero-logo-card { display: inline-flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 14px; padding: 18px 44px; box-shadow: 0 8px 40px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.3); transition: transform .25s ease, box-shadow .25s ease; }
+  .hero-logo-card:hover { transform: translateY(-3px); box-shadow: 0 14px 50px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.3); }
+  .hero-logo-card img { height: 72px; display:block; }
+  .hero-rule { width:40px; height:2px; background:linear-gradient(90deg,transparent,var(--red),transparent); margin:0 auto 18px; position:relative; z-index:1; }
+  .hero h1 { color:#fff; font-size:13px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin-bottom:10px; opacity:.8; position:relative; z-index:1; }
+  .hero-tagline { color:#fff; font-size:28px; font-weight:700; letter-spacing:-.02em; margin-bottom:6px; position:relative; z-index:1; }
+  .hero-tagline span { color:var(--mid); }
+  .hero-sub { color:rgba(255,255,255,.5); font-size:14px; font-weight:300; max-width:580px; margin:0 auto 28px; line-height:1.75; position:relative; z-index:1; }
+  .hero-tags { display:flex; flex-wrap:wrap; gap:7px; justify-content:center; position:relative; z-index:1; }
+  .htag { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.13); color:rgba(255,255,255,.72); font-size:11px; font-family:'IBM Plex Mono',monospace; padding:4px 11px; border-radius:3px; }
+
+  .main-wrap { max-width:1140px; margin:0 auto; padding:44px 32px 80px; }
+  .two-col { display:grid; grid-template-columns:230px 1fr; gap:40px; align-items:start; }
+
+  .sidebar { position:sticky; top:68px; }
+  .nav-lbl { font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:13px 0 5px; border-top:1px solid var(--border); }
+  .nav-lbl:first-child { border-top:none; padding-top:0; }
+  a.nav-link { display:block; padding:5px 10px; color:var(--text); text-decoration:none; font-size:13.5px; border-radius:4px; border-left:2px solid transparent; transition:all .15s; }
+  a.nav-link:hover, a.nav-link.active { background:var(--light); border-left-color:var(--steel); color:var(--navy); }
+
+  section[id] { margin-bottom:52px; scroll-margin-top:76px; }
+  .sec-hdr { display:flex; align-items:center; gap:11px; margin-bottom:18px; padding-bottom:10px; border-bottom:2px solid var(--border); }
+  .sec-icon { width:32px; height:32px; background:var(--navy); color:#fff; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .sec-hdr h2 { font-size:19px; font-weight:600; color:var(--navy); letter-spacing:-.01em; }
+
+  .card { background:#fff; border:1px solid var(--border); border-radius:8px; padding:20px 22px; margin-bottom:14px; }
+  .card h3 { font-size:13.5px; font-weight:600; color:var(--navy); margin-bottom:8px; }
+  .card p, .card li { font-size:13.5px; line-height:1.65; }
+  .card ul, .card ol { padding-left:17px; margin-top:5px; }
+  .card li { margin-bottom:4px; }
+  .card-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+
+  .alert { border-radius:6px; padding:13px 16px; margin-bottom:14px; font-size:13.5px; display:flex; gap:11px; align-items:flex-start; }
+  .alert-icon { font-size:15px; flex-shrink:0; margin-top:1px; }
+  .alert-warn  { background:#FFF8E7; border:1px solid var(--warn); color:#7A4F00; }
+  .alert-info  { background:#EBF3FF; border:1px solid var(--steel); color:#1A3A6B; }
+  .alert-danger{ background:#FFF0F0; border:1px solid var(--red); color:#7A0010; }
+  .alert-ok    { background:#EDFAF3; border:1px solid var(--green); color:#1B5E35; }
+
+  pre, code { font-family:'IBM Plex Mono',monospace; }
+  .code-block { background:var(--code-bg); border-radius:8px; overflow:hidden; margin-bottom:14px; }
+  .code-hdr { background:rgba(255,255,255,.05); padding:7px 15px; font-size:10.5px; color:rgba(255,255,255,.4); letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.07); display:flex; justify-content:space-between; align-items:center; }
+  .dots { display:flex; gap:5px; } .dot { width:7px; height:7px; border-radius:50%; }
+  .dr{background:#FF5F57;} .dy{background:#FFBD2E;} .dg{background:#28CA41;}
+  pre { padding:16px 18px; color:var(--code-text); font-size:12.5px; line-height:1.7; overflow-x:auto; white-space:pre-wrap; word-break:break-word; }
+  code.inline { background:var(--light); color:var(--navy); padding:2px 6px; border-radius:3px; font-size:12px; border:1px solid var(--border); }
+
+  .file-tree { background:var(--code-bg); border-radius:8px; padding:16px 20px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#8BD0E8; line-height:2; }
+  .file-tree .folder { color:#F5A623; }
+  .file-tree .file   { color:#C3E88D; }
+  .file-tree .note   { color:#5A7F9A; font-size:11px; }
+  .file-tree .new    { color:#FF9E64; }
+
+  .example-block { background:#fff; border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:18px; }
+  .ex-hdr  { background:var(--light); padding:9px 17px; font-size:11.5px; font-weight:600; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid var(--border); }
+  .ex-q    { padding:13px 17px; font-size:13.5px; background:#FAFBFD; border-bottom:1px solid var(--border); color:var(--navy); }
+  .ex-q::before    { content:"→ User: "; font-weight:600; color:var(--steel); font-size:10.5px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; margin-right:4px; }
+  .ex-a    { padding:13px 17px; font-size:13.5px; color:var(--text); line-height:1.7; }
+  .ex-a::before    { content:"← Claude: "; font-weight:600; color:var(--green); font-size:10.5px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; margin-right:4px; }
+
+  .steps { counter-reset:step; }
+  .step  { display:flex; gap:14px; margin-bottom:18px; align-items:flex-start; }
+  .step-num { counter-increment:step; min-width:28px; height:28px; background:var(--navy); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; flex-shrink:0; margin-top:2px; }
+  .step-body h4 { font-size:14px; font-weight:600; color:var(--navy); margin-bottom:3px; }
+  .step-body p, .step-body li { font-size:13.5px; line-height:1.6; }
+  .step-body ul { padding-left:15px; margin-top:4px; } .step-body li { margin-bottom:3px; }
+
+  .update-step { background:#fff; border:1px solid var(--border); border-left:4px solid var(--steel); border-radius:0 6px 6px 0; padding:12px 16px; margin-bottom:9px; font-size:13.5px; }
+  .update-step strong { color:var(--navy); }
+
+  .data-table { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:14px; }
+  .data-table th { background:var(--navy); color:#fff; padding:9px 13px; text-align:left; font-weight:500; font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; }
+  .data-table td { padding:8px 13px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .data-table tr:last-child td { border-bottom:none; }
+  .data-table tr:nth-child(even) td { background:#FAFBFD; }
+
+  .tag { display:inline-block; background:var(--light); border:1px solid var(--border); color:var(--navy); font-size:11px; font-weight:500; padding:3px 8px; border-radius:20px; margin:2px; }
+  .tag-r { background:#FFF0F0; border-color:var(--red); color:var(--red); }
+  .tag-b { background:#EBF3FF; border-color:var(--steel); color:var(--steel); }
+  .tag-g { background:#EDFAF3; border-color:var(--green); color:var(--green); }
+  .tag-o { background:#FFF8E7; border-color:var(--warn); color:#7A4F00; }
+
+  footer { background: var(--navy); color:rgba(255,255,255,.5); text-align:center; padding:30px 22px 24px; margin-top:40px; }
+  footer strong { color:rgba(255,255,255,.8); }
+
+  @media(max-width:768px){ .two-col{grid-template-columns:1fr;} .sidebar{display:none;} .card-grid{grid-template-columns:1fr;} .hero h1{font-size:26px;} }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-logo-chip">
+        <img src="https://cdn.jsdelivr.net/gh/Cyberceo72/tcr-assets@main/TCR%20Engineering%20Logo%20-%20254.png" alt="TCR Engineering">
+      </div>
+      <div class="hdiv"></div>
+      <span class="header-title">Quality Management System — Skill Documentation</span>
+    </div>
+    <span class="skill-badge">TCR-QMS v3.0</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-logo-area">
+    <div class="hero-logo-card">
+      <img src="https://cdn.jsdelivr.net/gh/Cyberceo72/tcr-assets@main/TCR%20Engineering%20Logo%20-%20254.png" alt="TCR Engineering Services">
+    </div>
+  </div>
+  <div class="hero-rule"></div>
+  <h1>Quality Management System</h1>
+  <div class="hero-tagline">TCR-QMS <span>Skill</span></div>
+  <p class="hero-sub">50+ years of institutional knowledge — structured for daily quality, technical, and safety work across all TCR Engineering disciplines.</p>
+  <div class="hero-tags">
+    <span class="htag">NABL ISO/IEC 17025:2017</span>
+    <span class="htag">ASTM · ISO · BS · NACE · API</span>
+    <span class="htag">NDT · Mechanical · Chemical · Fracture · Civil</span>
+    <span class="htag">NADCAP · Asset Integrity · Welding</span>
+    <span class="htag">Safety Manual (In Revision)</span>
+  </div>
+</div>
+
+<div class="main-wrap">
+<div class="two-col">
+
+<nav class="sidebar">
+  <div class="nav-lbl">Overview</div>
+  <a href="#what" class="nav-link active">What This Skill Does</a>
+  <a href="#contents" class="nav-link">Skill Contents</a>
+  <div class="nav-lbl">Setup</div>
+  <a href="#install" class="nav-link">Installation</a>
+  <a href="#usage" class="nav-link">Usage Examples</a>
+  <div class="nav-lbl">Reference</div>
+  <a href="#examples" class="nav-link">Prompt → Response</a>
+  <a href="#humanizer" class="nav-link">Humanizer Rules</a>
+  <a href="#update-nabl" class="nav-link">Update: NABL Renewal</a>
+  <a href="#update-safety" class="nav-link">Update: Safety Manual</a>
+  <a href="#important" class="nav-link">Important Notes</a>
+</nav>
+
+<div class="content">
+
+<!-- WHAT -->
+<section id="what">
+  <div class="sec-hdr"><div class="sec-icon">⚙</div><h2>What This Skill Does</h2></div>
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ</span>
+    <span>This skill gives Claude deep TCR Engineering context — 50 years of institutional knowledge, your full NABL scope, every relevant standard across all disciplines, client-specific requirements, and safety rules — so every document it generates is ready for TCR's actual working environment, not a generic lab.</span>
+  </div>
+  <div class="card-grid">
+    <div class="card"><h3>📋 Document Generation</h3><ul>
+      <li>Test procedures (all TCR disciplines)</li><li>Work instructions</li><li>Method statements</li>
+      <li>NCRs and corrective actions</li><li>RLA and asset integrity reports</li>
+      <li>Safety manual sections (interim)</li><li>Gap analyses with RAG status</li>
+    </ul></div>
+    <div class="card"><h3>🔬 Standards Depth</h3><ul>
+      <li>ASTM A/B/E/G-series, ISO, BS, NACE, API</li><li>NABL scope (TC-6905) flagging</li>
+      <li>NADCAP audit criteria (AC7114, AC7102, AC7101)</li><li>Client specs: Aramco, PDO, OQGN, ONGC, EIL, NOV</li>
+      <li>Welding codes: ASME IX, AWS D1 series, ISO 9606/15614</li>
+    </ul></div>
+    <div class="card"><h3>🏗 All TCR Disciplines</h3><ul>
+      <li>Mechanical & fracture toughness</li><li>Corrosion & sour gas</li><li>NDT (all methods, advanced)</li>
+      <li>Welding & WPS/WPQ</li><li>Civil & construction materials</li>
+      <li>Composites, polymers, rubber, glass</li><li>Asset integrity, RBI, FFS, RLA</li>
+    </ul></div>
+    <div class="card"><h3>🛡 Safety & HSE</h3><ul>
+      <li>H2S sour gas controls</li><li>RT / radiography safety (AERB)</li>
+      <li>Chemical lab safety</li><li>Cryogenic (LN2) controls</li>
+      <li>Machine shop safety</li><li>Working at height (rope access excluded)</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- CONTENTS -->
+<section id="contents">
+  <div class="sec-hdr"><div class="sec-icon">📁</div><h2>Skill Contents</h2></div>
+  <div class="file-tree">
+    <span class="folder">TCR-QMS/</span><br>
+    &nbsp;&nbsp;├─ <span class="file">SKILL.md</span> &nbsp;<span class="note">← Main skill. Read first on every invocation.</span><br>
+    &nbsp;&nbsp;└─ <span class="folder">references/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">nabl-scope.md</span> &nbsp;<span class="note">← TC-6905 cert + full accredited scope table. Update post-renewal.</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">mechanical-fracture.md</span> &nbsp;<span class="note">← ASTM A/E-series, ISO, CTOD, H2S pre-charging</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">corrosion-sour.md</span> &nbsp;<span class="note">← NACE TM0177/TM0284, ASTM G-series, ISO 15156</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">ndt-standards.md</span> &nbsp;<span class="note">← UT, RT, MT, PT, ET, AET, VT, LT; PAUT, TOFD, ACFM, MFL</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">welding-standards.md</span> &nbsp;<span class="note">← ASME IX, AWS D1 series, ISO 9606/15614, sour service weld rules</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">api-asset-integrity.md</span> &nbsp;<span class="note">← API 510/570/579/580/581/653/1104, BS 7910, RBI, FFS, RLA</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">nadcap.md</span> &nbsp;<span class="note">← AC7114 NDT, AC7102 heat treatment, AC7101 materials testing</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">civil-composites.md</span> &nbsp;<span class="note">← IS civil, ASTM C/D composites/rubber/glass, RoHS IEC 62321</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">qms-nabl.md</span> &nbsp;<span class="note">← ISO 17025:2017 clause-by-clause, NABL docs, MU budget template</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">client-specs.md</span> &nbsp;<span class="note">← Saudi Aramco, PDO, OQGN, ONGC, EIL, NOV client matrices</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <span class="new">safety-manual-ref.md</span> &nbsp;<span class="note">← NEW: Interim HSE requirements. Update when manual issued.</span>
+  </div>
+
+  <table class="data-table" style="margin-top:16px">
+    <thead><tr><th>File</th><th>Purpose</th><th>When to Update</th></tr></thead>
+    <tbody>
+      <tr><td><code class="inline">SKILL.md</code></td><td>Core instructions, templates, workflow steps, writing rules. Claude reads this on every task.</td><td>When service scope changes, document conventions change, or after NABL renewal.</td></tr>
+      <tr><td><code class="inline">nabl-scope.md</code></td><td>Full accredited scope for TC-6905. Claude reads before any accredited report question.</td><td><strong>Immediately</strong> after NABL certificate renewal Q2 2026.</td></tr>
+      <tr><td><code class="inline">safety-manual-ref.md</code></td><td>Interim HSE requirements until revised Safety Manual is issued.</td><td>When new TCR Safety Manual is formally approved and issued.</td></tr>
+      <tr><td>Other reference files</td><td>Deep standards detail by discipline. Claude reads on demand when the domain is relevant.</td><td>When major standard revisions occur or TCR adds new discipline.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- INSTALL -->
+<section id="install">
+  <div class="sec-hdr"><div class="sec-icon">📦</div><h2>Installation Instructions</h2></div>
+  <div class="steps">
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Unzip and upload to your Claude Project</h4>
+      <p>Extract <code class="inline">TCR-QMS-Skill-v3.0.zip</code>. Upload all files maintaining the folder structure: <code class="inline">TCR-QMS/SKILL.md</code> and <code class="inline">TCR-QMS/references/*.md</code>. The subfolder structure is required — Claude reads reference files by path.</p>
+    </div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Add the skill description to your Project's system prompt</h4>
+    </div></div>
+  </div>
+  <div class="code-block">
+    <div class="code-hdr"><div class="dots"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div></div><span>Paste into Claude Project system prompt</span></div>
+    <pre>name: TCR-QMS
+description: >
+  Senior Quality Manager and Standards Expert for TCR Engineering Services.
+  Use for: test procedures, work instructions, gap analysis, NABL/ISO 17025,
+  ASTM/NACE/API/ISO/BS/IS standards, NDT, welding qualification, fracture
+  mechanics, corrosion/sour gas, asset integrity, civil testing, composites,
+  NADCAP, safety/HSE procedures, client specs (Aramco/PDO/OQGN/EIL/NOV),
+  or any TCR quality or technical document.</pre>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Verify the humanizer skill is installed</h4>
+      <p>TCR-QMS calls the humanizer (Pass 1 + Pass 3) for all document outputs. Ensure the humanizer skill is present in the same Project at <code class="inline">/mnt/skills/user/humanizer/SKILL.md</code>.</p>
+    </div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Test installation</h4>
+      <p>Try: <em>"Write a Charpy impact testing procedure for weld joints at −20°C per ISO 148-1."</em> Claude should produce a numbered, clause-structured procedure citing specific TCR document conventions and NABL obligations.</p>
+    </div></div>
+  </div>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠</span>
+    <span><strong>Token efficiency:</strong> SKILL.md loads on every invocation. Keep it lean. Reference files load on demand. Never paste large tables directly into SKILL.md — that's what the references folder is for.</span>
+  </div>
+</section>
+
+<!-- USAGE -->
+<section id="usage">
+  <div class="sec-hdr"><div class="sec-icon">💡</div><h2>Usage Examples</h2></div>
+  <div style="margin-bottom:16px">
+    <span class="tag tag-b">Test Procedures</span><span class="tag tag-b">Work Instructions</span><span class="tag tag-b">Gap Analysis</span>
+    <span class="tag tag-r">H2S / Sour Gas</span><span class="tag tag-r">Structural Audits</span><span class="tag tag-r">NADCAP Prep</span>
+    <span class="tag tag-g">NABL Compliance</span><span class="tag tag-g">MU Budgets</span><span class="tag tag-g">Audit NCRs</span>
+    <span class="tag tag-o">Client Specs</span><span class="tag tag-o">Safety Manual</span><span class="tag tag-o">RLA Reports</span>
+  </div>
+  <div class="card"><h3>Sample prompts</h3><ul>
+    <li>"Write a CTOD procedure for HAZ testing at −10°C per ISO 15653 for a PDO pipeline project"</li>
+    <li>"Check this tensile test report for ISO 17025 clause 7.8 compliance"</li>
+    <li>"Write the H2S HSE section for our sour gas testing procedure"</li>
+    <li>"Create an NCR for calibration overdue found in use on our Charpy machine"</li>
+    <li>"Do a gap analysis of our MT procedure against AC7114/3 NADCAP requirements"</li>
+    <li>"Draft a work instruction for weld macro examination per ISO 17639"</li>
+    <li>"Write the methodology section for an RLA report on a 1990s reformer furnace"</li>
+    <li>"What are the Saudi Aramco SAES-A-301 requirements for sour service material hardness?"</li>
+    <li>"Create an uncertainty budget for our Brinell hardness test"</li>
+    <li>"Write the PPE requirements section for a structural audit method statement — no rope access"</li>
+    <li>"Draft corrective action for a major NABL NCR on MU not reported in test reports"</li>
+  </ul></div>
+</section>
+
+<!-- EXAMPLES -->
+<section id="examples">
+  <div class="sec-hdr"><div class="sec-icon">🔄</div><h2>Prompt → Response Examples</h2></div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 1 — CTOD Procedure with H2S Pre-Charging</div>
+    <div class="ex-q">"Write a CTOD procedure for HAZ testing at −10°C with H2S pre-charging per NACE TM0177 Solution A for a MAN Industries project."</div>
+    <div class="ex-a">Generates TCR/MANIND/CTOD/01 Rev 0A with all 11 mandatory sections. Section 6 (HSE) includes: NACE TM0177 Solution A (5% NaCl + 0.5% acetic acid, pH 2.6–2.8), minimum 96-hour soak, 10-minute hard transfer limit, H2S personal monitors, buddy system, SCBA standby, scrubber. References ISO 15653:2018, ISO 12135:2021, BS 8571:2018. Acceptance criteria left blank pending customer input. Revision block included. Humanizer Passes 1 + 3 applied — no AI vocabulary, direct technical language throughout.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 2 — NABL Scope Check</div>
+    <div class="ex-q">"Can we issue a NABL-accredited report for ASTM D638 tensile testing of a polymer composite?"</div>
+    <div class="ex-a">Reads nabl-scope.md. Confirms ASTM D638 (polymer tensile) is not in TC-6905 scope — it falls under composite/polymer methods which are confirmed out-of-scope. Advises: the test can be performed and reported as a non-accredited test with the standard disclaimer. Revised NABL cert expected Q2 2026 may or may not add this — verify with NABL before quoting under accredited status.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 3 — Saudi Aramco Client Spec Interface</div>
+    <div class="ex-q">"What hardness requirements apply to our carbon steel welds for a sour service Saudi Aramco project?"</div>
+    <div class="ex-a">Reads client-specs.md and welding-standards.md. Gives: parent metal and weld metal ≤ 250 HV10; HAZ ≤ 250 HV10 (NACE MR0175/ISO 15156 baseline); Aramco SAES-A-301 supplements this with specific alloy additions. Vickers traverse mandatory across parent/HAZ/weld per NACE MR0175 Appendix D. PWHT typically required for CE >0.43%. Notes that TCR cannot approve deviations from SAES on client's behalf — formal written waiver required from Aramco for any delta.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 4 — ISO 17025 Corrective Action</div>
+    <div class="ex-q">"Write a corrective action for a major NCR finding that our tensile test reports are missing uncertainty of measurement."</div>
+    <div class="ex-a">Produces a formal NCR document (TCR-NCR-[YEAR]-[NN]) with: NC description citing ISO 17025:2017 Clause 7.6 and 7.8.2; root cause (no MU budget established for tensile test, not included in report template); immediate containment (suspend NABL-marked tensile reports until MU established; notify affected clients); corrective action (establish MU budget per GUM, update report template, train authorized signatories); target date; effectiveness verification by internal audit. Severity classified as major — affects accreditation status.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 5 — Structural Audit Method Statement</div>
+    <div class="ex-q">"Write the access and inspection methodology for a structural condition assessment of a 1988 jetty."</div>
+    <div class="ex-a">Generates methodology section covering: visual inspection of primary/secondary members, cover meter survey, half-cell potential mapping, carbonation depth (phenolphthalein), UT thickness on steel components, photographic documentation protocol. Access specified as scaffolding and MEWP — rope access explicitly excluded as not used at TCR. Condition grading matrix I–IV. Findings structured into P1/P2/P3 priority matrix in the report.</div>
+  </div>
+</section>
+
+<!-- HUMANIZER -->
+<section id="humanizer">
+  <div class="sec-hdr"><div class="sec-icon">✍</div><h2>Humanizer Rules for TCR Documents</h2></div>
+  <div class="alert alert-ok">
+    <span class="alert-icon">✓</span>
+    <span><strong>TCR rule:</strong> Apply humanizer Pass 1 and Pass 3 only. Skip Pass 2 (soul injection) for all audit-facing, NABL-related, and formal technical documents at TCR.</span>
+  </div>
+  <div class="card-grid">
+    <div class="card"><h3>✅ Pass 1 — Strip AI Patterns</h3><ul>
+      <li>Remove AI vocabulary: "delve", "crucial", "landscape", "testament", "foster", "showcase", "underscore", "pivotal"</li>
+      <li>Replace "serves as" / "stands as" with "is"</li>
+      <li>Remove vague attributions and inflated significance</li>
+      <li>Fix em-dash overuse, mechanical bold, emoji headers</li>
+      <li>Strip filler phrases ("it is important to note that")</li>
+    </ul></div>
+    <div class="card"><h3>⛔ Pass 2 — SKIP for TCR</h3>
+      <p style="margin-bottom:8px">Pass 2 adds personality, opinions, first-person voice. Not appropriate for:</p>
+      <ul>
+        <li>Test procedures and work instructions</li><li>Safety manuals and HSE documents</li>
+        <li>NABL audit records</li><li>NCRs and corrective actions</li>
+        <li>Any ISO 17025 compliance document</li><li>Client submission documents</li>
+      </ul>
+      <p style="margin-top:8px; color:var(--muted); font-size:12.5px">May apply only to client proposals or marketing copy.</p>
+    </div>
+    <div class="card"><h3>✅ Pass 3 — Anti-AI Audit</h3><ul>
+      <li>Break uniform paragraph rhythm</li>
+      <li>Remove placeholder-feeling specifics</li>
+      <li>Eliminate slogan-y closers</li>
+      <li>Fix overly balanced structures</li>
+      <li>Final check: "does this still sound AI-generated?"</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- UPDATE NABL -->
+<section id="update-nabl">
+  <div class="sec-hdr"><div class="sec-icon">🔄</div><h2>Updating: NABL Certificate Renewal</h2></div>
+  <p style="margin-bottom:16px; font-size:14px; color:var(--muted)">When TCR receives the renewed NABL certificate (expected Q2 2026):</p>
+  <div class="update-step"><strong>Step 1.</strong> Open <code class="inline">references/nabl-scope.md</code>.</div>
+  <div class="update-step"><strong>Step 2.</strong> Update Certificate Number, Issue Date, and Valid Until at the top of the file. Change the "Pending" status note to "CURRENT as of [date]".</div>
+  <div class="update-step"><strong>Step 3.</strong> Update the scope tables section by section against the new NABL schedule. Add new disciplines (e.g., full civil IS suite); remove any withdrawn methods.</div>
+  <div class="update-step"><strong>Step 4.</strong> Open <code class="inline">SKILL.md</code>. Find the civil scope bullet: "Civil NABL scope: currently partial… revised cert expected Q2 2026…" and update or remove it.</div>
+  <div class="update-step"><strong>Step 5.</strong> Re-upload updated files to the Claude Project (same filenames, overwrite in place).</div>
+  <div class="update-step"><strong>Step 6.</strong> Test with: "What is TCR's NABL scope for civil testing?" — should return the updated scope without the pending-renewal caveat.</div>
+  <div class="alert alert-warn" style="margin-top:12px">
+    <span class="alert-icon">⚠</span>
+    <span>Until the renewed cert is uploaded, Claude will continue to flag the Q2 2026 civil scope caveat on relevant queries. This is intentional — it prevents TCR from inadvertently issuing NABL-marked reports for tests not yet in scope.</span>
+  </div>
+</section>
+
+<!-- UPDATE SAFETY -->
+<section id="update-safety">
+  <div class="sec-hdr"><div class="sec-icon">🛡</div><h2>Updating: Safety Manual</h2></div>
+  <p style="margin-bottom:16px; font-size:14px; color:var(--muted)">When the revised TCR Safety Manual is formally approved and issued:</p>
+  <div class="update-step"><strong>Step 1.</strong> Obtain the final approved Safety Manual PDF. Note the document number and revision.</div>
+  <div class="update-step"><strong>Step 2.</strong> Open <code class="inline">references/safety-manual-ref.md</code>. Change STATUS from "UNDER REVISION" to "CURRENT — [Doc No] Rev [X], issued [Date]".</div>
+  <div class="update-step"><strong>Step 3.</strong> Replace the interim requirement content with section references to the actual manual (e.g., "Section 4.3 Working at Height — see Safety Manual Rev 01, p. 22").</div>
+  <div class="update-step"><strong>Step 4.</strong> Open <code class="inline">SKILL.md</code>. Find "Safety Manual — STATUS: UNDER REVISION" and update the status line. Remove the note about flagging superseded sections.</div>
+  <div class="update-step"><strong>Step 5.</strong> Re-upload both files to the Claude Project.</div>
+  <div class="update-step"><strong>Step 6.</strong> Test with: "What are the TCR PPE requirements for gamma radiography?" — response should reference the issued Safety Manual section, not the interim gap analysis.</div>
+</section>
+
+<!-- IMPORTANT -->
+<section id="important">
+  <div class="sec-hdr"><div class="sec-icon">⚠</div><h2>Important Notes</h2></div>
+  <div class="alert alert-danger">
+    <span class="alert-icon">🚫</span>
+    <span><strong>Rope access is prohibited at TCR.</strong> This is a hard rule embedded in the skill. Claude will never include rope access as an access method in any TCR document. If a client spec mentions it, Claude will flag it as outside TCR's operational scope.</span>
+  </div>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠</span>
+    <span><strong>Safety Manual in revision.</strong> Safety sections generated by Claude are based on the interim requirements in <code class="inline">safety-manual-ref.md</code> (from the Rev 02 gap analysis). All safety outputs must be reviewed by the TCR safety officer before use or site deployment.</span>
+  </div>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠</span>
+    <span><strong>NABL civil scope partial.</strong> TC-6905 currently covers aggregates, concrete, and bricks only. Full IS civil suite (cement, soil, bitumen, rebar, tiles) is pending the Q2 2026 revised certificate. Claude will flag this on civil testing queries.</span>
+  </div>
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ</span>
+    <span><strong>Acceptance criteria: always verify.</strong> Claude quotes acceptance limits from the cited standard. The issuing engineer must verify the limit against the current published edition before signing off any procedure or report.</span>
+  </div>
+  <div class="card"><h3>This skill does not replace:</h3><ul>
+    <li>NABL authorised signatory sign-off on accredited test reports</li>
+    <li>Level III review and approval of NDT written practices</li>
+    <li>Safety officer review of HSE documents before site deployment</li>
+    <li>Customer-specific procedure approval where contractually required</li>
+    <li>Engineering judgment on borderline acceptance criteria</li>
+    <li>AERB compliance review for radiography procedures</li>
+  </ul></div>
+</section>
+
+</div><!-- .content -->
+</div><!-- .two-col -->
+</div><!-- .main-wrap -->
+
+<footer>
+  <div style="margin-bottom:14px">
+    <div style="display:inline-block; background:#ffffff; border-radius:8px; padding:10px 24px; box-shadow:0 4px 16px rgba(0,0,0,.3);">
+      <img src="https://cdn.jsdelivr.net/gh/Cyberceo72/tcr-assets@main/TCR%20Engineering%20Logo%20-%20254.png"
+           alt="TCR Engineering" style="height:32px; display:block;">
+    </div>
+  </div>
+  <strong>TCR Engineering Services Pvt. Ltd.</strong> &nbsp;|&nbsp; Est. 1973 &nbsp;|&nbsp; NABL ISO/IEC 17025:2017 — TC-6905 &nbsp;|&nbsp; tcreng.com<br>
+  <span style="margin-top:5px;display:block">TCR-QMS Skill v3.0 &nbsp;·&nbsp; Internal use only. Not for distribution.</span>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('a.nav-link');
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector(`a.nav-link[href="#${e.target.id}"]`);
+        if (l) l.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' }).forEach ? 
+  (() => { const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector(`a.nav-link[href="#${e.target.id}"]`);
+        if (l) l.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' }); sections.forEach(s => obs.observe(s)); })() : null;
+</script>
+</body>
+</html>
