@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCR-QMS Skill v4.1 — Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+  :root {
+    --navy: #0B1E3D; --red: #C8102E; --steel: #4A6FA5; --light: #EBF0F8;
+    --mid: #A8BBDA; --text: #1A2A40; --muted: #6B7E99; --border: #D0DCF0;
+    --code-bg: #0D2137; --code-text: #7EC8E3; --warn: #F5A623; --green: #2D9D4E;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #F4F7FB; color: var(--text); line-height: 1.65; font-size: 15px; }
+  html { scroll-behavior: smooth; }
+  .site-header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,.35); }
+  .header-inner { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 10px 32px; }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-logo-chip { background: #fff; border-radius: 5px; padding: 5px 10px; display:flex; align-items:center; }
+  .header-logo-chip img { height: 26px; display:block; }
+  .hdiv { width:1px; height:26px; background:rgba(255,255,255,.2); }
+  .header-title { color:#fff; font-size:12px; font-weight:500; letter-spacing:.05em; text-transform:uppercase; opacity:.75; }
+  .skill-badge { background:var(--red); color:#fff; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; padding:4px 10px; border-radius:3px; letter-spacing:.03em; }
+  .hero { background: linear-gradient(150deg, #060f1e 0%, #0B1E3D 40%, #132D5A 75%, #1A3A6B 100%); padding:64px 32px 52px; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74,111,165,0.22) 0%, transparent 70%); pointer-events:none; }
+  .hero-logo-area { margin: 0 auto 28px; position:relative; z-index:1; }
+  .hero-logo-card { display: inline-flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 14px; padding: 18px 44px; box-shadow: 0 8px 40px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.3); }
+  .hero-logo-card img { height: 72px; display:block; }
+  .hero-rule { width:40px; height:2px; background:linear-gradient(90deg,transparent,var(--red),transparent); margin:0 auto 18px; position:relative; z-index:1; }
+  .hero h1 { color:#fff; font-size:13px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin-bottom:10px; opacity:.8; position:relative; z-index:1; }
+  .hero-tagline { color:#fff; font-size:28px; font-weight:700; letter-spacing:-.02em; margin-bottom:6px; position:relative; z-index:1; }
+  .hero-tagline span { color:var(--mid); }
+  .hero-sub { color:rgba(255,255,255,.5); font-size:14px; font-weight:300; max-width:640px; margin:0 auto 28px; line-height:1.75; position:relative; z-index:1; }
+  .hero-tags { display:flex; flex-wrap:wrap; gap:7px; justify-content:center; position:relative; z-index:1; }
+  .htag { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.13); color:rgba(255,255,255,.72); font-size:11px; font-family:'IBM Plex Mono',monospace; padding:4px 11px; border-radius:3px; }
+  .main-wrap { max-width: 1140px; margin: 0 auto; padding: 44px 32px 80px; }
+  .two-col { display: grid; grid-template-columns: 250px 1fr; gap: 40px; align-items: start; }
+  .sidebar { position: sticky; top: 68px; }
+  .nav-lbl { font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:13px 0 5px; border-top:1px solid var(--border); }
+  .nav-lbl:first-child { border-top:none; padding-top:0; }
+  a.nav-link { display:block; padding:5px 10px; color:var(--text); text-decoration:none; font-size:13px; border-radius:4px; border-left:2px solid transparent; transition:all .15s; }
+  a.nav-link:hover, a.nav-link.active { background:var(--light); border-left-color:var(--steel); color:var(--navy); }
+  section[id] { margin-bottom:52px; scroll-margin-top:76px; }
+  .sec-hdr { display:flex; align-items:center; gap:11px; margin-bottom:18px; padding-bottom:10px; border-bottom:2px solid var(--border); }
+  .sec-icon { width:32px; height:32px; background:var(--navy); color:#fff; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .sec-hdr h2 { font-size:19px; font-weight:600; color:var(--navy); letter-spacing:-.01em; }
+  .card { background:#fff; border:1px solid var(--border); border-radius:8px; padding:20px 22px; margin-bottom:14px; }
+  .card h3 { font-size:13.5px; font-weight:600; color:var(--navy); margin-bottom:8px; }
+  .card p, .card li { font-size:13.5px; line-height:1.65; }
+  .card ul, .card ol { padding-left:17px; margin-top:5px; }
+  .card li { margin-bottom:4px; }
+  .card-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+  .card-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:13px; }
+  .alert { border-radius:6px; padding:13px 16px; margin-bottom:14px; font-size:13.5px; display:flex; gap:11px; align-items:flex-start; }
+  .alert-icon { font-size:15px; flex-shrink:0; margin-top:1px; }
+  .alert-warn  { background:#FFF8E7; border:1px solid var(--warn); color:#7A4F00; }
+  .alert-info  { background:#EBF3FF; border:1px solid var(--steel); color:#1A3A6B; }
+  .alert-danger{ background:#FFF0F0; border:1px solid var(--red); color:#7A0010; }
+  .alert-ok    { background:#EDFAF3; border:1px solid var(--green); color:#1B5E35; }
+  pre, code { font-family:'IBM Plex Mono',monospace; }
+  .code-block { background:var(--code-bg); border-radius:8px; overflow:hidden; margin-bottom:14px; }
+  .code-hdr { background:rgba(255,255,255,.05); padding:7px 15px; font-size:10.5px; color:rgba(255,255,255,.4); letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.07); display:flex; justify-content:space-between; align-items:center; }
+  .dots { display:flex; gap:5px; } .dot { width:7px; height:7px; border-radius:50%; }
+  .dr{background:#FF5F57;} .dy{background:#FFBD2E;} .dg{background:#28CA41;}
+  pre { padding:16px 18px; color:var(--code-text); font-size:12.5px; line-height:1.7; overflow-x:auto; white-space:pre-wrap; word-break:break-word; }
+  code.inline { background:var(--light); color:var(--navy); padding:2px 6px; border-radius:3px; font-size:12px; border:1px solid var(--border); }
+  .file-tree { background:var(--code-bg); border-radius:8px; padding:16px 20px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#8BD0E8; line-height:2; }
+  .file-tree .folder { color:#F5A623; }
+  .file-tree .file   { color:#C3E88D; }
+  .file-tree .note   { color:#5A7F9A; font-size:11px; }
+  .file-tree .new    { color:#FF9E64; }
+  .example-block { background:#fff; border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:18px; }
+  .ex-hdr  { background:var(--light); padding:9px 17px; font-size:11.5px; font-weight:600; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid var(--border); }
+  .ex-q    { padding:13px 17px; font-size:13.5px; background:#FAFBFD; border-bottom:1px solid var(--border); color:var(--navy); }
+  .ex-q::before    { content:"→ User: "; font-weight:600; color:var(--steel); font-size:10.5px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; margin-right:4px; }
+  .ex-a    { padding:13px 17px; font-size:13.5px; color:var(--text); line-height:1.7; }
+  .ex-a::before    { content:"← Claude: "; font-weight:600; color:var(--green); font-size:10.5px; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; margin-right:4px; }
+  .steps { counter-reset:step; }
+  .step  { display:flex; gap:14px; margin-bottom:18px; align-items:flex-start; }
+  .step-num { counter-increment:step; min-width:28px; height:28px; background:var(--navy); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; flex-shrink:0; margin-top:2px; }
+  .step-body h4 { font-size:14px; font-weight:600; color:var(--navy); margin-bottom:3px; }
+  .step-body p, .step-body li { font-size:13.5px; line-height:1.6; }
+  .update-step { background:#fff; border:1px solid var(--border); border-left:4px solid var(--steel); border-radius:0 6px 6px 0; padding:12px 16px; margin-bottom:9px; font-size:13.5px; }
+  .update-step strong { color:var(--navy); }
+  .data-table { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:14px; }
+  .data-table th { background:var(--navy); color:#fff; padding:9px 13px; text-align:left; font-weight:500; font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; }
+  .data-table td { padding:8px 13px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .data-table tr:last-child td { border-bottom:none; }
+  .data-table tr:nth-child(even) td { background:#FAFBFD; }
+  .tag { display:inline-block; background:var(--light); border:1px solid var(--border); color:var(--navy); font-size:11px; font-weight:500; padding:3px 8px; border-radius:20px; margin:2px; }
+  .tag-r { background:#FFF0F0; border-color:var(--red); color:var(--red); }
+  .tag-b { background:#EBF3FF; border-color:var(--steel); color:var(--steel); }
+  .tag-g { background:#EDFAF3; border-color:var(--green); color:var(--green); }
+  .tag-o { background:#FFF8E7; border-color:var(--warn); color:#7A4F00; }
+  .tag-p { background:#F3EBFF; border-color:#7C3AED; color:#7C3AED; }
+  footer { background: var(--navy); color:rgba(255,255,255,.5); text-align:center; padding:30px 22px 24px; margin-top:40px; }
+  footer strong { color:rgba(255,255,255,.8); }
+  @media(max-width:768px){ .two-col{grid-template-columns:1fr;} .sidebar{display:none;} .card-grid{grid-template-columns:1fr;} .card-grid-3{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-logo-chip">
+        <img src="https://cdn.jsdelivr.net/gh/Cyberceo72/tcr-assets@main/TCR%20Engineering%20Logo%20-%20254.png" alt="TCR Engineering">
+      </div>
+      <div class="hdiv"></div>
+      <span class="header-title">Quality Management System — Skill Documentation</span>
+    </div>
+    <span class="skill-badge">TCR-QMS v4.1</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-logo-area">
+    <div class="hero-logo-card">
+      <img src="https://cdn.jsdelivr.net/gh/Cyberceo72/tcr-assets@main/TCR%20Engineering%20Logo%20-%20254.png" alt="TCR Engineering Services">
+    </div>
+  </div>
+  <div class="hero-rule"></div>
+  <h1>Quality Management System</h1>
+  <div class="hero-tagline">TCR-QMS <span>Skill v4.1</span></div>
+  <p class="hero-sub">50+ years of institutional knowledge — covering procedures, checklists, audit prep, ILC/PT, customer response, failure analysis, FFS/RLA/RBI, witness scheduling, machine shop instructions, HR job descriptions, AI/robotics, and continuous improvement for every TCR employee.</p>
+  <div class="hero-tags">
+    <span class="htag">NABL ISO/IEC 17025:2017</span>
+    <span class="htag">ASTM · ISO · BS · NACE · API</span>
+    <span class="htag">NDT · Mechanical · Corrosion · Civil</span>
+    <span class="htag">NADCAP · Asset Integrity · Welding</span>
+    <span class="htag">ILC/PT · Z-Score</span>
+    <span class="htag">Audit Prep · BARC Safety</span>
+    <span class="htag">Customer Email · FAQ Builder</span>
+    <span class="htag">Daily Checklists · Witness Scheduling</span>
+    <span class="htag">Machine Shop · Specimen Prep</span>
+    <span class="htag">HR Job Descriptions</span>
+    <span class="htag">AI · Robotics · Digitalization</span>
+    <span class="htag">Lessons Learned · Continuous Improvement</span>
+  </div>
+</div>
+
+<div class="main-wrap">
+<div class="two-col">
+
+<nav class="sidebar">
+  <div class="nav-lbl">Overview</div>
+  <a href="#what" class="nav-link active">What This Skill Does</a>
+  <a href="#whats-new" class="nav-link">What's New in v4.0</a>
+  <a href="#contents" class="nav-link">Skill Contents</a>
+  <div class="nav-lbl">Setup</div>
+  <a href="#install" class="nav-link">Installation</a>
+  <a href="#org" class="nav-link">Organisation Setup</a>
+  <div class="nav-lbl">Usage</div>
+  <a href="#usage" class="nav-link">Prompt Examples</a>
+  <a href="#examples" class="nav-link">Prompt → Response</a>
+  <div class="nav-lbl">Reference</div>
+  <a href="#humanizer" class="nav-link">Humanizer Rules</a>
+  <a href="#integrations" class="nav-link">Gmail + Calendar</a>
+  <a href="#ai-robotics" class="nav-link">AI &amp; Robotics</a>
+  <a href="#lessons" class="nav-link">Lessons Learned</a>
+  <a href="#roadmap" class="nav-link">Roadmap &amp; Data Population</a>
+  <a href="#update-nabl" class="nav-link">Update: NABL Renewal</a>
+  <a href="#update-safety" class="nav-link">Update: Safety Manual</a>
+  <a href="#important" class="nav-link">Important Notes</a>
+</nav>
+
+<div class="content">
+
+<!-- WHAT -->
+<section id="what">
+  <div class="sec-hdr"><div class="sec-icon">⚙</div><h2>What This Skill Does</h2></div>
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ</span>
+    <span>This skill gives Claude deep TCR Engineering context — 50 years of institutional knowledge, NABL scope, standards across all disciplines, client specs, safety rules, audit prep matrices, ILC/PT management, customer email handling, and daily operational checklists — so every output is ready for TCR's actual working environment.</span>
+  </div>
+  <div class="card-grid-3">
+    <div class="card"><h3>📋 Document Generation</h3><ul>
+      <li>Test procedures (all disciplines)</li>
+      <li>Work instructions for technicians</li>
+      <li>Daily machine checklists</li>
+      <li>Method statements</li>
+      <li>NCRs and corrective actions</li>
+      <li>RLA and asset integrity reports</li>
+      <li>Safety manual sections</li>
+      <li>Gap analyses with RAG status</li>
+    </ul></div>
+    <div class="card"><h3>🔬 Standards &amp; Analysis</h3><ul>
+      <li>ASTM, ISO, BS, NACE, API, IS</li>
+      <li>NABL scope (TC-6905) flagging</li>
+      <li>NADCAP (AC7114, AC7102, AC7101)</li>
+      <li>FFS per API 579-1</li>
+      <li>RLA, RBI per API 580/581</li>
+      <li>ECA per BS 7910, API 1104</li>
+      <li>Z-score analysis for ILC/PT</li>
+      <li>Failure investigation (RCA)</li>
+    </ul></div>
+    <div class="card"><h3>🏢 Operations</h3><ul>
+      <li>Pre-audit assessment checklists</li>
+      <li>Third-party witness scheduling</li>
+      <li>Customer email responses</li>
+      <li>Quotation + blog linking</li>
+      <li>Company FAQ accumulation</li>
+      <li>Daily safety compliance</li>
+      <li>PPE and HR compliance</li>
+      <li>Calibration verification logs</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- WHATS NEW -->
+<section id="whats-new">
+  <div class="sec-hdr"><div class="sec-icon">🆕</div><h2>What's New in v4.1</h2></div>
+  <div class="card-grid">
+    <div class="card"><h3>Technician Work Instructions + Daily Checklists</h3>
+      <p>Generate machine-specific daily checklists with pre-start calibration verification, safety checks, environmental monitoring, and shift sign-off fields. Templates for UTM, Charpy, hardness testers, metallography lab, H2S lab, RT area, machine shop, and civil lab.</p>
+    </div>
+    <div class="card"><h3>ILC/PT Programme Management</h3>
+      <p>Z-score calculation, trend analysis, corrective action workflow for unsatisfactory results, PT schedule management, and NABL Doc 113 compliance checking.</p>
+    </div>
+    <div class="card"><h3>Third-Party Inspector Witness Scheduling</h3>
+      <p>Draft witness appointments with all details. Auto-create Google Calendar events when Calendar MCP is connected. Formatted fallback for manual entry.</p>
+    </div>
+    <div class="card"><h3>Pre-Audit Assessment Programme</h3>
+      <p>Readiness checklists for NABL, NADCAP, IBR, BMC, PDO, RIL, L&amp;T, and BARC safety audits. Each tailored to the specific audit body's focus areas.</p>
+    </div>
+    <div class="card"><h3>Customer Email Response Engine</h3>
+      <p>Technically sound responses for report delays, test clarifications, amendments, complaints, and pricing inquiries. Links to relevant quotations and tcreng.com blog posts. Gmail MCP integration when connected, copy-paste fallback.</p>
+    </div>
+    <div class="card"><h3>Machine Shop Specimen Prep Instructions</h3>
+      <p>Generate specimen preparation orders with standard-referenced drawings, dimensions, tolerances, surface finish, and notch specifications. Covers ASTM E8, E23, E1820, NACE TM0177, NACE TM0284, ASME IX, and all common test geometries. Includes traceability and QC verification fields.</p>
+    </div>
+    <div class="card"><h3>HR Job Description Generator</h3>
+      <p>Create role-specific job descriptions derived from understanding what existing team members do. Covers qualifications, certifications (ASNT, NABL AS, AERB RSO, API, NACE CIP), and technical competencies. Owned by Atul Yadav (PR &amp; HR).</p>
+    </div>
+    <div class="card"><h3>AI &amp; Robotics Section</h3>
+      <p>Documents TCR's current capabilities (storage tank robotic inspection, RT film digitalization) and planned growth areas (AI flaw detection, automated corrosion mapping, drone inspection). Grows as new capabilities come online.</p>
+    </div>
+    <div class="card"><h3>Lessons Learned System</h3>
+      <p>A persistent feedback log (<code class="inline">lessons-learned.md</code>) that captures corrections and improvements. Claude reads this FIRST before every task, preventing repeated mistakes and enabling continuous improvement.</p>
+    </div>
+    <div class="card"><h3>14 Named Personnel</h3>
+      <p>Full org chart embedded: Seema Rajpure (QA), Avinash Tambewagh (Technical), Parul Hariya (Civil), Manoj Singh (Mech/Corrosion), Shemi Bhaskaran (RSO/Safety), Shailendra B. Singh (TPI/NDT), Dr. Essampally Ajay (Sr. Metallurgist), Atul Yadav (PR/HR), Ashwant Singh (AGM), Lalit Surve (GM), Samir Choudhury (GM Eastern), Paresh Haribhakti (Global Technical), Hemant R. Sakpal (Sales).</p>
+    </div>
+    <div class="card"><h3>Output Folder Rule</h3>
+      <p>All generated files (docx, pptx, xlsx, pdf, images) are automatically saved to <code class="inline">/mnt/user-data/outputs/</code> so users can download them immediately.</p>
+    </div>
+    <div class="card"><h3>Company FAQ Knowledge Base</h3>
+      <p>Every customer interaction and technical Q&amp;A is logged as a reusable FAQ entry, building institutional knowledge over time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENTS -->
+<section id="contents">
+  <div class="sec-hdr"><div class="sec-icon">📁</div><h2>Skill Contents</h2></div>
+  <div class="file-tree">
+    <span class="folder">TCR-QMS/</span><br>
+    &nbsp;&nbsp;├─ <span class="file">SKILL.md</span> &nbsp;<span class="note">← Main skill. Read first on every invocation.</span><br>
+    &nbsp;&nbsp;└─ <span class="folder">references/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">nabl-scope.md</span> &nbsp;<span class="note">← TC-6905 cert + accredited scope table</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">mechanical-fracture.md</span> &nbsp;<span class="note">← ASTM A/E-series, ISO, CTOD, H2S pre-charging</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">corrosion-sour.md</span> &nbsp;<span class="note">← NACE TM0177/TM0284, ASTM G-series, ISO 15156</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">ndt-standards.md</span> &nbsp;<span class="note">← UT, RT, MT, PT, ET, AET, VT, LT; PAUT, TOFD, ACFM, MFL</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">welding-standards.md</span> &nbsp;<span class="note">← ASME IX, AWS D1, ISO 9606/15614</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">api-asset-integrity.md</span> &nbsp;<span class="note">← API 510/570/579/580/581/653/1104, BS 7910</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">nadcap.md</span> &nbsp;<span class="note">← AC7114 NDT, AC7102 heat treatment, AC7101 materials testing</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">civil-composites.md</span> &nbsp;<span class="note">← IS civil, composites, rubber, glass, RoHS</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">qms-nabl.md</span> &nbsp;<span class="note">← ISO 17025 clause-by-clause, NABL docs, MU budgets</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">client-specs.md</span> &nbsp;<span class="note">← Saudi Aramco, PDO, OQGN, ONGC, EIL, NOV</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="file">safety-manual-ref.md</span> &nbsp;<span class="note">← Interim HSE requirements</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">questionnaires.md</span> &nbsp;<span class="note">← NEW: Pre-task question sets (10 categories)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">ilc-pt-programme.md</span> &nbsp;<span class="note">← NEW: PT/ILC management, Z-score, NABL Doc 113</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">pre-audit-checklists.md</span> &nbsp;<span class="note">← NEW: NABL, NADCAP, IBR, BMC, PDO, RIL, L&amp;T, BARC</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">daily-checklists.md</span> &nbsp;<span class="note">← NEW: Machine startup, calibration, safety per area</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">customer-response.md</span> &nbsp;<span class="note">← NEW: Email templates, quotation linking, blog index</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">faq-knowledge-base.md</span> &nbsp;<span class="note">← NEW: Accumulated Q&amp;A (grows over time)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">lessons-learned.md</span> &nbsp;<span class="note">← NEW: Feedback log — read FIRST before every task</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">service-scope.md</span> &nbsp;<span class="note">← NEW: Full TCR service scope (extracted for token efficiency)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">training-matrix.md</span> &nbsp;<span class="note">← NEW: Personnel competencies, AS status, certs, training due</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">calibration-register.md</span> &nbsp;<span class="note">← NEW: Equipment cal status, due dates, OOC procedure</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <span class="new">subcontractor-register.md</span> &nbsp;<span class="note">← NEW: NABL 6.6 approved subcontractors by test type</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <span class="new">document-control-register.md</span> &nbsp;<span class="note">← NEW: Master list of procedures, WIs, forms + revisions</span>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install">
+  <div class="sec-hdr"><div class="sec-icon">📦</div><h2>Installation</h2></div>
+  <div class="steps">
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Unzip and upload to your Claude Project</h4>
+      <p>Extract <code class="inline">TCR-QMS-Skill-v4.1.zip</code>. Upload all files maintaining the folder structure.</p>
+    </div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Add the skill description to your Project's system prompt</h4>
+    </div></div>
+  </div>
+  <div class="code-block">
+    <div class="code-hdr"><div class="dots"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div></div><span>Paste into Claude Project system prompt</span></div>
+    <pre>name: TCR-QMS
+description: >
+  Senior Quality Manager, Standards Expert, and Operational Assistant for TCR
+  Engineering Services. Use for: test procedures, work instructions, daily
+  checklists, machine shop specimen prep, gap analysis, NABL/ISO 17025, ILC/PT
+  Z-scores, pre-audit assessments (NABL/NADCAP/IBR/BMC/PDO/RIL/L&amp;T/BARC),
+  third-party witness scheduling, FFS/RLA/RBI/ECA analysis, failure investigation,
+  customer email responses with quotation+blog linking, HR job descriptions,
+  AI/robotics capabilities, safety/HSE, or any TCR quality, technical, or
+  operational document.</pre>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Verify the humanizer skill is installed</h4>
+      <p>TCR-QMS calls the humanizer (Pass 1 + Pass 3) for all document outputs.</p>
+    </div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Optional: Connect Gmail and Google Calendar MCPs</h4>
+      <p>For customer email reading and third-party witness calendar integration. The skill works without these (copy-paste fallback), but MCP connections enable full automation.</p>
+    </div></div>
+    <div class="step"><div class="step-num"></div><div class="step-body">
+      <h4>Test installation</h4>
+      <p>Try: <em>"Write a daily checklist for the Charpy impact machine."</em> — Claude should ask clarifying questions first, then generate a formatted checklist with TCR logo, calibration verification, and safety checks.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ORG -->
+<section id="org">
+  <div class="sec-hdr"><div class="sec-icon">👥</div><h2>Organisation Setup</h2></div>
+  <p style="margin-bottom:14px; font-size:14px;">The skill has TCR's full org structure embedded. These names are used when assigning responsibilities in all generated documents.</p>
+  <table class="data-table">
+    <thead><tr><th>Role</th><th>Name</th><th>Assigned In</th></tr></thead>
+    <tbody>
+      <tr><td>President</td><td>Rohit Bafna</td><td>Policy approvals, management review</td></tr>
+      <tr><td>Quality Head</td><td>Seema Rajpure</td><td>QMS, NABL liaison, internal audits, PT programme, complaints</td></tr>
+      <tr><td>Global Technical Head</td><td>Paresh Haribhakti</td><td>Global technical oversight; TCR Advanced (Vadodara)</td></tr>
+      <tr><td>Technical Head</td><td>Avinash Tambewagh</td><td>Method validation, technical decisions, calibration oversight</td></tr>
+      <tr><td>Head — Civil Testing</td><td>Parul Hariya</td><td>Civil discipline procedures, IS standards, BMC compliance</td></tr>
+      <tr><td>Head — Mechanical &amp; Corrosion</td><td>Manoj Singh</td><td>Mechanical/corrosion procedures, IBR compliance</td></tr>
+      <tr><td>Head — TPI &amp; NDT Coordinator</td><td>Shailendra B. Singh</td><td>Third-party inspection, NDT coordination, NADCAP</td></tr>
+      <tr><td>RSO &amp; Safety Officer</td><td>Shemi Bhaskaran</td><td>Radiation safety, AERB, HSE oversight, BARC audits</td></tr>
+      <tr><td>Sr. Metallurgist</td><td>Dr. Essampally Ajay</td><td>Failure analysis, metallurgical interpretation</td></tr>
+      <tr><td>Assistant General Manager</td><td>Ashwant Singh</td><td>Operations management</td></tr>
+      <tr><td>General Manager</td><td>Lalit Surve</td><td>Financial and administrative authority</td></tr>
+      <tr><td>GM — TCR Eastern (Odisha)</td><td>Samir Choudhury</td><td>Eastern operations, BBSR lab</td></tr>
+      <tr><td>PR &amp; HR</td><td>Atul Yadav</td><td>Recruitment, job descriptions, PR communications</td></tr>
+      <tr><td>Manager — Sales</td><td>Hemant R. Sakpal</td><td>Quotations, client pricing, sales coordination</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- USAGE -->
+<section id="usage">
+  <div class="sec-hdr"><div class="sec-icon">💡</div><h2>Prompt Examples by Category</h2></div>
+  <div style="margin-bottom:16px">
+    <span class="tag tag-b">Procedures</span><span class="tag tag-b">Work Instructions</span><span class="tag tag-b">Daily Checklists</span>
+    <span class="tag tag-r">H2S / Sour Gas</span><span class="tag tag-r">Failure Analysis</span><span class="tag tag-r">FFS / RLA</span>
+    <span class="tag tag-g">NABL Compliance</span><span class="tag tag-g">ILC / Z-Score</span><span class="tag tag-g">Audit NCRs</span>
+    <span class="tag tag-o">Client Specs</span><span class="tag tag-o">Customer Emails</span><span class="tag tag-o">Witness Scheduling</span>
+    <span class="tag tag-p">Pre-Audit Prep</span><span class="tag tag-p">Safety / Checklists</span><span class="tag tag-p">FAQ</span>
+    <span class="tag tag-p">Machine Shop</span><span class="tag tag-p">HR / Recruitment</span><span class="tag tag-p">AI / Robotics</span>
+  </div>
+
+  <div class="card"><h3>📋 Procedures &amp; Work Instructions</h3><ul>
+    <li>"Write a CTOD procedure for HAZ testing at −10°C per ISO 15653 for a PDO pipeline project"</li>
+    <li>"Draft a work instruction for Charpy impact testing at sub-zero temperatures"</li>
+    <li>"Write the H2S HSE section for our sour gas testing procedure"</li>
+    <li>"Create a weld macro examination work instruction per ISO 17639"</li>
+    <li>"Write a tensile testing procedure for elevated temperature per ASTM E21"</li>
+    <li>"Draft a procedure for salt spray corrosion testing per ASTM B117"</li>
+  </ul></div>
+
+  <div class="card"><h3>✅ Daily Checklists &amp; Safety</h3><ul>
+    <li>"Create a daily startup checklist for the UTM machine"</li>
+    <li>"Write a daily calibration and safety checklist for the H2S sour gas lab"</li>
+    <li>"Generate a daily checklist for the radiography area including AERB requirements"</li>
+    <li>"Prepare a PPE compliance checklist for the chemical analysis lab"</li>
+    <li>"Write a machine shop daily safety inspection checklist"</li>
+    <li>"Create an end-of-shift close-out checklist for the metallography lab"</li>
+  </ul></div>
+
+  <div class="card"><h3>📊 ILC/PT &amp; Z-Score Analysis</h3><ul>
+    <li>"Calculate the Z-score for our latest tensile PT result: we got 520 MPa, assigned value 515 MPa, sigma 8 MPa"</li>
+    <li>"Review our PT participation status for all accredited methods and identify gaps"</li>
+    <li>"Our Charpy impact PT result was Z = 3.2. What corrective actions are required?"</li>
+    <li>"Prepare a PT trend analysis chart for our hardness testing over the last 4 rounds"</li>
+    <li>"Draft a corrective action for an unsatisfactory ILC result on chemical composition by OES"</li>
+  </ul></div>
+
+  <div class="card"><h3>🔍 Pre-Audit Assessment</h3><ul>
+    <li>"Prepare a NABL pre-audit readiness checklist for our mechanical testing lab"</li>
+    <li>"We have a NADCAP audit for NDT in 3 months. Generate a preparation checklist"</li>
+    <li>"Create a BARC safety audit readiness checklist for our RT facility"</li>
+    <li>"Prepare an IBR audit checklist for our boiler material testing scope"</li>
+    <li>"Generate a PDO vendor audit readiness matrix"</li>
+    <li>"What should we prepare for an L&amp;T vendor audit of our testing lab?"</li>
+    <li>"Prepare a BMC audit readiness checklist for our civil testing lab"</li>
+    <li>"Create a RIL vendor audit preparation matrix"</li>
+  </ul></div>
+
+  <div class="card"><h3>📅 Third-Party Witness Scheduling</h3><ul>
+    <li>"Schedule a TPI witness for Bureau Veritas on our Charpy testing next Tuesday at 10 AM"</li>
+    <li>"Create a witness appointment for DNV inspector for CTOD testing, job number TCR/MAN/2026/045"</li>
+    <li>"Book a witness slot for the L&amp;T QC engineer for weld tensile testing on March 30"</li>
+  </ul></div>
+
+  <div class="card"><h3>🔧 FFS / RLA / RBI / ECA &amp; Failure Analysis</h3><ul>
+    <li>"Do an API 579-1 Level 1 assessment for general metal loss on a 1995 carbon steel pressure vessel"</li>
+    <li>"Write the methodology section for an RLA report on a 1990s reformer furnace"</li>
+    <li>"Calculate remaining life for a pipeline with 0.15 mm/year corrosion rate and 3 mm remaining wall"</li>
+    <li>"Prepare an RBI assessment for a heat exchanger bundle with known CUI damage"</li>
+    <li>"Conduct a failure investigation scope of work for a cracked carbon steel elbow in sour service"</li>
+    <li>"Prepare a root cause analysis report for a weld failure on a pipeline girth weld"</li>
+  </ul></div>
+
+  <div class="card"><h3>📧 Customer Email Responses</h3><ul>
+    <li>"A customer is asking why their tensile test report is delayed by 2 weeks. Draft a response."</li>
+    <li>"A client wants to know if we can do HIC testing per NACE TM0284. Draft a response with our capability and a quote reference."</li>
+    <li>"An angry customer says our hardness values don't match their expectations. Draft a professional technical response."</li>
+    <li>"A new customer is asking about our CTOD testing capability. Draft a response and include relevant blog links."</li>
+    <li>"Draft a response to a customer asking about report amendment for incorrect specimen identification"</li>
+  </ul></div>
+
+  <div class="card"><h3>📖 General Quality &amp; Compliance</h3><ul>
+    <li>"Check this tensile test report for ISO 17025 clause 7.8 compliance"</li>
+    <li>"Create an NCR for calibration overdue found in use on our Charpy machine"</li>
+    <li>"Do a gap analysis of our MT procedure against AC7114/3 NADCAP requirements"</li>
+    <li>"Create an uncertainty budget for our Brinell hardness test"</li>
+    <li>"What are the Saudi Aramco SAES-A-301 requirements for sour service material hardness?"</li>
+    <li>"Can we issue a NABL-accredited report for ASTM D638 tensile testing of a polymer composite?"</li>
+    <li>"Draft corrective action for a major NABL NCR on MU not reported in test reports"</li>
+  </ul></div>
+
+  <div class="card"><h3>🔧 Machine Shop — Specimen Preparation</h3><ul>
+    <li>"Prepare a machine shop instruction for Charpy V-notch specimens per ASTM E23 from SA516 Gr.70 plate, weld centreline orientation"</li>
+    <li>"Generate a specimen prep order for round tensile specimens per ASTM E8 Fig. 4 from duplex pipe material"</li>
+    <li>"Create a machine shop order for HIC test coupons per NACE TM0284, 100x20mm, 6 specimens, heat number H2847"</li>
+    <li>"What are the CTOD specimen dimensions per BS 8571 for a 25mm thick plate? Prepare a shop order."</li>
+    <li>"Prepare machine shop instructions for macro specimens from a weld qualification per ASME IX QW-462.1"</li>
+    <li>"Generate specimen prep instructions for SSC Method A round tensile per NACE TM0177 Fig. 1"</li>
+  </ul></div>
+
+  <div class="card"><h3>👥 HR — Job Descriptions &amp; Recruitment</h3><ul>
+    <li>"Write a job description for a Senior Test Engineer in the Mechanical Testing department reporting to Manoj Singh"</li>
+    <li>"We need to hire an NDT Level II technician for UT and MT. Draft a job description."</li>
+    <li>"Create a job description for a Quality Manager who can serve as NABL authorised signatory"</li>
+    <li>"Draft a JD for a lab chemist for our OES/XRF chemical analysis section"</li>
+    <li>"We need a metallographer experienced in failure analysis. Write a JD reporting to Dr. Ajay."</li>
+    <li>"Prepare a job description for a field NDT inspector for pipeline projects"</li>
+  </ul></div>
+
+  <div class="card"><h3>🤖 AI &amp; Robotics</h3><ul>
+    <li>"Write a capability statement for our robotic storage tank inspection service"</li>
+    <li>"Draft a method statement for robotic MFL floor scanning per API 653"</li>
+    <li>"Prepare a client proposal section describing our RT film digitalization service"</li>
+    <li>"What are the benefits of robotic tank inspection vs. manual confined space entry? Prepare a comparison for a client."</li>
+  </ul></div>
+</section>
+
+<!-- EXAMPLES -->
+<section id="examples">
+  <div class="sec-hdr"><div class="sec-icon">🔄</div><h2>Prompt → Response Examples</h2></div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 1 — Daily Checklist Generation</div>
+    <div class="ex-q">"Create a daily startup checklist for the Charpy impact machine."</div>
+    <div class="ex-a">Claude first asks: What is the machine model and asset ID? What is the shift pattern (single/double)? What temperature range do you typically test at? Is there a certified reference specimen available for verification? — After receiving answers, generates a formatted checklist (Template E) with TCR logo, covering: pendulum free-swing energy verification, anvil/striker inspection, temperature bath calibration check, reference specimen test, safety guard check, PPE verification, emergency stop test, and technician/supervisor sign-off fields.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 2 — Z-Score Analysis</div>
+    <div class="ex-q">"Calculate the Z-score for our latest tensile PT result: we got 520 MPa, assigned value 515 MPa, sigma 8 MPa."</div>
+    <div class="ex-a">Z = (520 - 515) / 8 = 0.625. Classification: Satisfactory (|Z| ≤ 2.0). TCR's result is within acceptable range. No corrective action required. File the PT report and present at next management review. Recommends plotting this value on the running Z-score trend chart for tensile testing alongside previous rounds to check for systematic bias.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 3 — Pre-Audit Assessment</div>
+    <div class="ex-q">"We have a BARC safety audit coming up for our RT facility. Generate a readiness checklist."</div>
+    <div class="ex-a">Reads pre-audit-checklists.md. Generates a 12-item BARC readiness matrix covering: AERB licence currency, RSO designation and qualification, TLD dosimetry records, source inventory (Ir-192), shielded storage compliance, transport certificates, emergency drill records (source-stuck), contamination monitoring, personnel training records, radioactive waste disposal log, and AERB renewal application status. Each item has columns for: evidence required, responsible person (RSO and Safety Officer Shemi Bhaskaran, NDT Coordinator Shailendra B. Singh), and status (to be filled).</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 4 — Third-Party Witness Scheduling</div>
+    <div class="ex-q">"Schedule a TPI witness for Bureau Veritas on our CTOD testing next Tuesday at 10 AM, job TCR/MAN/2026/045."</div>
+    <div class="ex-a">Claude asks: Inspector name and email? TCR contact person for the visit? Any special preparation notes? — After receiving answers, generates appointment form (Template F) with all details. If Google Calendar MCP is connected, creates a calendar event titled "TPI Witness: CTOD Testing — Bureau Veritas" with location, description, attendees, and reminders (1 day + 2 hours before). If not connected, presents the formatted details for manual calendar entry.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 5 — Customer Email (Report Delay)</div>
+    <div class="ex-q">"A customer is asking why their Charpy impact report is delayed by 10 days. The reason is the test machine was down for recalibration. Draft a response."</div>
+    <div class="ex-a">Drafts a professional email acknowledging the delay directly, explaining that the impact testing machine underwent scheduled recalibration to maintain NABL accreditation standards, provides a specific revised delivery date, and offers to prioritise if the customer has an urgent deadline. Closes with TCR signature block. Logs the Q&amp;A to the FAQ knowledge base under "Commercial — Report Delay (Equipment Calibration)".</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 6 — Failure Investigation</div>
+    <div class="ex-q">"We received a cracked carbon steel elbow from a crude oil pipeline. Client wants a failure investigation. Prepare the scope."</div>
+    <div class="ex-a">Claude presents Questionnaire Q7 (failure investigation): material spec, service conditions, failure mode details, service history, visual observations, available samples, desired examination scope. After receiving answers, generates a failure investigation scope of work covering: visual/macro examination, metallographic cross-sections, chemical analysis (OES), mechanical testing (hardness traverse across crack), SEM fractography, and root cause classification. Output follows Template G with TCR logo.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 7 — FFS Level 1 Screening</div>
+    <div class="ex-q">"Do an API 579-1 Level 1 assessment for general metal loss on a 1995 carbon steel pressure vessel."</div>
+    <div class="ex-a">Claude presents Questionnaire Q6: design code, material grade, design conditions, operating conditions, UT thickness readings, corrosion rate data, previous assessments. After receiving data, identifies API 579-1 Part 4 (General Metal Loss), runs Level 1 screening (t_measured vs t_required with FCA), determines whether the vessel passes screening or needs Level 2 detailed assessment. Documents all assumptions and recommends next inspection interval.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 8 — CTOD Procedure with H2S Pre-Charging</div>
+    <div class="ex-q">"Write a CTOD procedure for HAZ testing at −10°C with H2S pre-charging per NACE TM0177 Solution A for a MAN Industries project."</div>
+    <div class="ex-a">Generates TCR/MANIND/CTOD/01 Rev 0A with all 11 mandatory sections including TCR logo. Section 6 (HSE): NACE TM0177 Solution A (5% NaCl + 0.5% acetic acid, pH 2.6-2.8), minimum 96-hour soak, 10-minute transfer limit, H2S monitors, buddy system, SCBA standby, scrubber. References ISO 15653:2018, ISO 12135:2021, BS 8571:2018. Humanizer Passes 1 + 3 applied.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 9 — Machine Shop Specimen Order</div>
+    <div class="ex-q">"Prepare a machine shop instruction for 6 Charpy V-notch specimens per ASTM E23 from SA516 Gr.70 plate, notch at weld centreline, heat number H4291."</div>
+    <div class="ex-a">Generates Template H with TCR logo. Specimen drawing reference: ASTM E23 Fig. 1 (standard size 10x10x55mm). V-notch: 2mm deep, 0.25mm tip radius, 45° included angle per ASTM E23 Clause 5. Notch orientation: through-thickness at weld centreline. Surface finish: 2 µm Ra on notch face. Traceability: stamp heat number H4291 on each specimen end. Includes quantity (6), priority, job number, identity continuity requirements, and QC verification sign-off. Saved to /mnt/user-data/outputs/.</div>
+  </div>
+
+  <div class="example-block">
+    <div class="ex-hdr">Example 10 — HR Job Description</div>
+    <div class="ex-q">"Write a job description for a Senior Test Engineer in Mechanical Testing reporting to Manoj Singh."</div>
+    <div class="ex-a">Claude asks Q12 questionnaire: Is this replacement or new? What drove the need? Minimum education? Mandatory certifications? After receiving answers, generates Template I with TCR logo. Role purpose derived from understanding mechanical testing operations (tensile, impact, hardness, bend, fracture toughness). Key responsibilities: execute tests per ASTM/ISO, review results, train junior technicians, maintain equipment calibration, support NABL assessments. Required: B.E. Metallurgy/Mechanical, 5+ years in accredited lab, knowledge of ASTM E8/E23/E384/E1820. Desirable: NABL authorised signatory experience, sour service testing (NACE TM0177). Prepared by Atul Yadav, reviewed by Manoj Singh, approved by Avinash Tambewagh.</div>
+  </div>
+</section>
+
+<!-- HUMANIZER -->
+<section id="humanizer">
+  <div class="sec-hdr"><div class="sec-icon">✍</div><h2>Humanizer Rules for TCR Documents</h2></div>
+  <div class="alert alert-ok">
+    <span class="alert-icon">✓</span>
+    <span><strong>TCR rule:</strong> Apply humanizer Pass 1 and Pass 3 only. Skip Pass 2 for all audit-facing, NABL-related, and formal technical documents.</span>
+  </div>
+  <div class="card-grid">
+    <div class="card"><h3>✅ Pass 1 — Strip AI Patterns</h3><ul>
+      <li>Remove: "delve", "crucial", "landscape", "testament", "foster", "showcase", "underscore", "pivotal"</li>
+      <li>Replace "serves as" / "stands as" with "is"</li>
+      <li>Remove vague attributions and inflated significance</li>
+      <li>Fix em-dash overuse, mechanical bold, emoji headers</li>
+      <li>Strip filler phrases</li>
+    </ul></div>
+    <div class="card"><h3>✅ Pass 3 — Anti-AI Audit</h3><ul>
+      <li>Break uniform paragraph rhythm</li>
+      <li>Remove placeholder-feeling specifics</li>
+      <li>Eliminate slogan-y closers</li>
+      <li>Fix overly balanced structures</li>
+      <li>Final check: "does this still sound AI-generated?"</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section id="integrations">
+  <div class="sec-hdr"><div class="sec-icon">🔗</div><h2>Gmail + Calendar Integration</h2></div>
+  <div class="card"><h3>Gmail MCP (Customer Emails)</h3>
+    <p>When connected, Claude can read incoming customer email threads to understand context before drafting responses. Without Gmail MCP, users paste email content directly. Both modes produce the same quality of technically sound responses with quotation and blog references.</p>
+  </div>
+  <div class="card"><h3>Google Calendar MCP (Witness Scheduling)</h3>
+    <p>When connected, Claude creates calendar events directly for third-party inspector witness appointments. Without Calendar MCP, Claude generates formatted appointment details for manual calendar entry. Connect the calendar when ready by adding the MCP integration.</p>
+  </div>
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ</span>
+    <span>Both integrations are optional. The skill operates fully without them using fallback modes.</span>
+  </div>
+</section>
+
+<!-- AI ROBOTICS -->
+<section id="ai-robotics">
+  <div class="sec-hdr"><div class="sec-icon">🤖</div><h2>AI &amp; Robotics Capabilities</h2></div>
+  <div class="card-grid">
+    <div class="card"><h3>Storage Tank Robotic Inspection</h3>
+      <p>Robotic crawlers for API 653 tank floor MFL scanning and wall UT thickness mapping. Eliminates confined space entry for initial survey. Data output integrates with RBI and FFS workflows. Currently operational.</p>
+    </div>
+    <div class="card"><h3>RT Film Digitalization</h3>
+      <p>Legacy radiographic films digitized to high-resolution digital images. Enables remote review, digital archiving, AI-assisted flaw detection, and modern data retention compliance. Currently operational.</p>
+    </div>
+  </div>
+  <div class="alert alert-info">
+    <span class="alert-icon">🔮</span>
+    <span><strong>Growth areas (under development):</strong> AI-assisted flaw detection in RT and PAUT data, automated corrosion mapping from UT scans, ML-based predictive RLA and corrosion trending, robotic UT/PAUT for in-service high-temperature inspection, drone-based visual inspection for structural audits. This section of the skill will expand as capabilities mature.</span>
+  </div>
+</section>
+
+<!-- LESSONS LEARNED -->
+<section id="lessons">
+  <div class="sec-hdr"><div class="sec-icon">📝</div><h2>Lessons Learned System</h2></div>
+  <div class="card">
+    <h3>How It Works</h3>
+    <p>The file <code class="inline">references/lessons-learned.md</code> captures feedback, corrections, and improvements from every skill usage session. Claude reads this file <strong>first</strong> before starting any new task, preventing repeated mistakes.</p>
+    <p style="margin-top:10px"><strong>What gets logged:</strong> user corrections to generated documents, formatting preferences, standard interpretation clarifications, client-specific nuances discovered during work, and any "do not do this again" feedback.</p>
+    <p style="margin-top:10px"><strong>Over time</strong>, this file becomes a continuously improving knowledge base that makes the skill smarter with each use. Periodically review it for company-wide process improvement insights.</p>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="sec-hdr"><div class="sec-icon">🗺</div><h2>Roadmap &amp; Data Population</h2></div>
+  <p style="margin-bottom:16px; font-size:14px; color:var(--muted)">The skill is production-ready now. These items enhance it over time as data becomes available.</p>
+
+  <div class="card"><h3>🔴 Populate Before Full Power (Data Files)</h3>
+  <p>These reference files have templates ready but need actual TCR data to be filled in:</p>
+  <ul>
+    <li><strong>Training Matrix</strong> (<code class="inline">training-matrix.md</code>) — List each employee's certifications, authorised signatory status, tests they are authorised to perform, and training/cert expiry dates. Source: HR records and NABL AS list.</li>
+    <li><strong>Equipment Calibration Register</strong> (<code class="inline">calibration-register.md</code>) — Enter every piece of equipment with asset ID, model, calibration dates, next due, and certificate references. Source: existing calibration register / LIMS.</li>
+    <li><strong>Subcontractor Register</strong> (<code class="inline">subcontractor-register.md</code>) — List approved subcontract labs, their NABL cert numbers, and the tests they are approved for. Source: Quality Head records.</li>
+    <li><strong>Document Control Register</strong> (<code class="inline">document-control-register.md</code>) — Enter every current procedure, WI, form, and checklist with document number and revision. Source: existing document master list.</li>
+  </ul>
+  </div>
+
+  <div class="card"><h3>🟡 Connect When Ready</h3>
+  <ul>
+    <li><strong>Google Calendar for TPI Witness Scheduling</strong> — Create a dedicated Google Calendar for third-party inspector appointments. Share the calendar ID. Connect the Google Calendar MCP in Claude. The skill will auto-create events with test details, inspector info, and reminders.</li>
+    <li><strong>Sales Quotation Database</strong> — Prepare a structured list of common quotations (test type, price, validity, quote number) in a Google Sheet or reference file. Feed it into <code class="inline">customer-response.md</code> so the skill can auto-match quotes to customer inquiries and include pricing in email responses.</li>
+    <li><strong>Gmail MCP for Customer Emails</strong> — If not already connected, connect Gmail MCP so the skill can read incoming customer email threads directly rather than relying on copy-paste.</li>
+  </ul>
+  </div>
+
+  <div class="card"><h3>🟢 Periodic Maintenance</h3>
+  <ul>
+    <li><strong>FAQ Knowledge Base size check</strong> — As <code class="inline">faq-knowledge-base.md</code> grows, periodically check its file size. If it exceeds ~300 entries or ~50KB, consider migrating it to a Google Sheet via CData for better searchability and to prevent the reference file from becoming too large to load efficiently.</li>
+    <li><strong>Safety Manual completion</strong> — When the revised TCR Safety Manual is formally approved and issued, follow the update procedure in the "Updating: Safety Manual" section below. Replace the interim gap-analysis content in <code class="inline">safety-manual-ref.md</code> with references to the issued manual sections.</li>
+    <li><strong>Blog post index</strong> — Update the topic-to-blog mapping in <code class="inline">customer-response.md</code> whenever new posts are published on tcreng.com/tcr-insights-blog.</li>
+    <li><strong>Lessons Learned review</strong> — Periodically review <code class="inline">lessons-learned.md</code> for patterns. If the same lesson appears repeatedly, consider embedding the fix directly into SKILL.md or the relevant reference file.</li>
+    <li><strong>NABL certificate renewal (Q2 2026)</strong> — Follow update procedure below when renewed TC-6905 arrives.</li>
+  </ul>
+  </div>
+
+  <div class="card"><h3>🔵 Future Enhancements (Not Yet Built)</h3>
+  <ul>
+    <li><strong>LIMS integration</strong> — Connect to TCR's LIMS for auto-pulling test results, report status, and sample tracking. Would require a custom MCP or CData connector.</li>
+    <li><strong>Live calibration status</strong> — Connect the calibration register to a Google Sheet via CData for real-time "is this machine in cal?" checks within the skill.</li>
+    <li><strong>AI/Robotics expansion</strong> — As new capabilities come online (AI flaw detection, drone inspection, automated corrosion mapping), document them in the AI &amp; Robotics section of SKILL.md and create supporting SOPs.</li>
+  </ul>
+  </div>
+</section>
+
+<!-- UPDATE NABL -->
+<section id="update-nabl">
+  <div class="sec-hdr"><div class="sec-icon">🔄</div><h2>Updating: NABL Certificate Renewal</h2></div>
+  <p style="margin-bottom:16px; font-size:14px; color:var(--muted)">When TCR receives the renewed NABL certificate (expected Q2 2026):</p>
+  <div class="update-step"><strong>Step 1.</strong> Open <code class="inline">references/nabl-scope.md</code>. Update Certificate Number, Issue Date, Valid Until.</div>
+  <div class="update-step"><strong>Step 2.</strong> Update scope tables against the new NABL schedule. Add new disciplines; remove withdrawn methods.</div>
+  <div class="update-step"><strong>Step 3.</strong> Open <code class="inline">SKILL.md</code>. Update the civil scope note.</div>
+  <div class="update-step"><strong>Step 4.</strong> Re-upload updated files to the Claude Project.</div>
+  <div class="update-step"><strong>Step 5.</strong> Test with: "What is TCR's NABL scope for civil testing?"</div>
+</section>
+
+<!-- UPDATE SAFETY -->
+<section id="update-safety">
+  <div class="sec-hdr"><div class="sec-icon">🛡</div><h2>Updating: Safety Manual</h2></div>
+  <p style="margin-bottom:16px; font-size:14px; color:var(--muted)">When the revised TCR Safety Manual is formally approved:</p>
+  <div class="update-step"><strong>Step 1.</strong> Obtain the final approved Safety Manual PDF.</div>
+  <div class="update-step"><strong>Step 2.</strong> Open <code class="inline">references/safety-manual-ref.md</code>. Change STATUS to "CURRENT".</div>
+  <div class="update-step"><strong>Step 3.</strong> Replace interim content with section references to the issued manual.</div>
+  <div class="update-step"><strong>Step 4.</strong> Update <code class="inline">SKILL.md</code> safety status section.</div>
+  <div class="update-step"><strong>Step 5.</strong> Re-upload and test.</div>
+</section>
+
+<!-- IMPORTANT -->
+<section id="important">
+  <div class="sec-hdr"><div class="sec-icon">⚠</div><h2>Important Notes</h2></div>
+  <div class="alert alert-danger">
+    <span class="alert-icon">🚫</span>
+    <span><strong>Rope access is prohibited at TCR.</strong> Claude will never include rope access as an access method.</span>
+  </div>
+  <div class="alert alert-info">
+    <span class="alert-icon">🤖</span>
+    <span><strong>Ask-first workflow.</strong> Claude will always present a questionnaire before generating documents. This prevents assumptions and ensures complete, accurate output.</span>
+  </div>
+  <div class="alert alert-ok">
+    <span class="alert-icon">📎</span>
+    <span><strong>TCR logo on all documents.</strong> Every generated document includes the TCR Engineering logo in the header.</span>
+  </div>
+  <div class="alert alert-ok">
+    <span class="alert-icon">📂</span>
+    <span><strong>All files to /outputs.</strong> Every generated document, presentation, image, or spreadsheet is automatically saved to <code class="inline">/mnt/user-data/outputs/</code> for immediate download.</span>
+  </div>
+  <div class="alert alert-ok">
+    <span class="alert-icon">📝</span>
+    <span><strong>Lessons learned.</strong> Feedback and corrections are logged to <code class="inline">lessons-learned.md</code> and read before every new task. The skill gets smarter with use.</span>
+  </div>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠</span>
+    <span><strong>Safety Manual in revision.</strong> Safety sections are based on interim requirements from the gap analysis. Review by the safety officer before deployment.</span>
+  </div>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠</span>
+    <span><strong>NABL civil scope partial.</strong> Full IS civil suite pending Q2 2026 certificate. Claude flags this on civil testing queries.</span>
+  </div>
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ</span>
+    <span><strong>Acceptance criteria: always verify.</strong> Claude quotes limits from cited standards. The issuing engineer must verify against the current published edition.</span>
+  </div>
+  <div class="alert alert-info">
+    <span class="alert-icon">ℹ</span>
+    <span><strong>FAQ grows over time.</strong> The <code class="inline">faq-knowledge-base.md</code> file accumulates answers from every customer interaction and technical query. Periodically download and review for company-wide distribution.</span>
+  </div>
+  <div class="card"><h3>This skill does not replace:</h3><ul>
+    <li>NABL authorised signatory sign-off on accredited test reports</li>
+    <li>Level III review and approval of NDT written practices</li>
+    <li>Safety officer review of HSE documents before site deployment</li>
+    <li>Customer-specific procedure approval where contractually required</li>
+    <li>Engineering judgment on borderline acceptance criteria</li>
+    <li>AERB compliance review for radiography procedures</li>
+    <li>Financial approvals for quotations (requires Lalit Surve / management sign-off)</li>
+  </ul></div>
+</section>
+
+</div><!-- .content -->
+</div><!-- .two-col -->
+</div><!-- .main-wrap -->
+
+<footer>
+  <div style="margin-bottom:14px">
+    <div style="display:inline-block; background:#ffffff; border-radius:8px; padding:10px 24px; box-shadow:0 4px 16px rgba(0,0,0,.3);">
+      <img src="https://cdn.jsdelivr.net/gh/Cyberceo72/tcr-assets@main/TCR%20Engineering%20Logo%20-%20254.png"
+           alt="TCR Engineering" style="height:32px; display:block;">
+    </div>
+  </div>
+  <strong>TCR Engineering Services Pvt. Ltd.</strong> &nbsp;|&nbsp; Est. 1973 &nbsp;|&nbsp; NABL ISO/IEC 17025:2017 — TC-6905 &nbsp;|&nbsp; tcreng.com<br>
+  <span style="margin-top:5px;display:block">TCR-QMS Skill v4.1 &nbsp;·&nbsp; Internal use only. Not for distribution.</span>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('a.nav-link');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const l = document.querySelector(`a.nav-link[href="#${e.target.id}"]`);
+        if (l) l.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
